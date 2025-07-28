@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Apple Case ID Verification</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <img src="apple-logo.png" class="logo" alt="Apple Logo">
+    <h2>Apple Verified Technician Case ID Lookup</h2>
+    <p>Only Apple verified technicians can generate valid case IDs.</p>
+    <form onsubmit="return verifyCaseID()">
+      <input type="text" id="caseId" placeholder="Enter your Case ID" required>
+      <button type="submit">Verify</button>
+    </form>
+    <p id="error" class="error-message"></p>
+  </div>
+
+  <script>
+    function verifyCaseID() {
+      const caseId = document.getElementById("caseId").value.trim();
+      if (caseId === "778249") {
+        window.location.href = "assigned.html";
+      } else {
+        document.getElementById("error").textContent = "Invalid Case ID. Please try again.";
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>
