@@ -81,7 +81,7 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Seal_of_the_United_States_Federal_Trade_Commission.svg/330px-Seal_of_the_United_States_Federal_Trade_Commission.svg.png" class="logo" alt="FTC Logo">
     <h1>Federal Trade Commission (FTC) Complaint Form</h1>
 
-    <form id="complaintForm">
+    <form id="complaintForm" onsubmit="handleSubmit(event)">
       <!-- Step 1 -->
       <div id="step1">
         <label>Full Name:</label>
@@ -129,7 +129,7 @@
         <label>Your Occupation:</label>
         <input type="text"><br>
         <label>Which support are you contacting?</label>
-        <select id="supportSelect" onchange="showLogoAndCase()">
+        <select id="supportSelect" onchange="showLogoAndCase()" required>
           <option value="">--Choose--</option>
           <option value="google">Google</option>
           <option value="microsoft">Microsoft</option>
@@ -148,13 +148,13 @@
       <!-- Step 3 -->
       <div id="step3" style="display:none;">
         <label>Are you filing this complaint for yourself or someone else?</label>
-        <select required>
+        <select id="selfOrOther" required>
           <option value="">--Choose--</option>
           <option>Myself</option>
           <option>Someone Else</option>
         </select><br>
         <label>
-          <input type="checkbox" required> I agree to the FTC terms and conditions
+          <input type="checkbox" id="agreeCheckbox" required> I agree to the FTC terms and conditions
         </label><br>
         <button type="submit">Submit Complaint</button>
       </div>
@@ -210,8 +210,16 @@
       }
     }
 
-    document.getElementById('complaintForm').addEventListener('submit', function (e) {
+    function handleSubmit(e) {
       e.preventDefault();
+
+      const isChecked = document.getElementById("agreeCheckbox").checked;
+      const selectValue = document.getElementById("selfOrOther").value;
+
+      if (!isChecked || selectValue === "") {
+        alert("Please agree to terms and choose for whom you're filing.");
+        return;
+      }
 
       document.getElementById('step3').style.display = 'none';
       const finalMessage = document.getElementById('finalMessage');
@@ -224,7 +232,7 @@
         <p style="margin-top: 20px;">Thank you for submitting your report. Our officers will begin reviewing your complaint shortly.</p>
       `;
       finalMessage.style.display = 'block';
-    });
+    }
   </script>
 </body>
 </html>
