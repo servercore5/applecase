@@ -1,37 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Apple Case ID Verification</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prank Complaint Form</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="card">
-    <img src="apple.png" alt="Apple Logo" class="apple-logo" />
-    <h2>Apple Verified Technician</h2>
-    <p class="subtext">Only Apple verified technicians can generate valid Case IDs.</p>
+  <div class="container">
+    <img src="ftc.png" class="logo" alt="FTC Logo">
+    <h1>Prank Complaint Form</h1>
 
-    <form onsubmit="return verifyCaseID()">
-      <input type="text" id="caseId" placeholder="Enter Case ID" required />
-      <button type="submit">Verify Case ID</button>
+    <form id="complaintForm">
+      <!-- Step 1 -->
+      <div id="step1">
+        <label>Full Name:</label>
+        <input type="text" required><br>
+        <label>Email Address:</label>
+        <input type="email" required><br>
+        <label>Phone Number:</label>
+        <input type="tel" required><br>
+        <label>Select Issue:</label>
+        <select id="issue" required>
+          <option value="">--Choose--</option>
+          <option>Hacking</option>
+          <option>Online Shopping Fraud</option>
+          <option>SSN Fraud</option>
+          <option>Network Fraud</option>
+        </select><br>
+        <div id="issueBox" style="display:none;">
+          <label>Describe your issue in detail:</label>
+          <textarea required></textarea>
+        </div>
+        <button type="button" onclick="showStep2()">Next</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="step2" style="display:none;">
+        <label>Select affected bank(s):</label>
+        <select multiple>
+          <option>Bank of America</option>
+          <option>Wells Fargo</option>
+          <option>JPMorgan Chase</option>
+          <option>Citibank</option>
+          <option>U.S. Bank</option>
+          <option>PNC Bank</option>
+          <option>TD Bank</option>
+          <option>Capital One</option>
+          <option>Truist Bank</option>
+          <option>Goldman Sachs</option>
+        </select><br>
+        <label>Specific Bank (if not listed):</label>
+        <input type="text"><br>
+        <label>SSN Number:</label>
+        <input type="text" placeholder="XXX-XX-XXXX"><br>
+        <label>Your Address:</label>
+        <textarea></textarea><br>
+        <label>Your Occupation:</label>
+        <input type="text"><br>
+        <label>Which support are you contacting?</label>
+        <select id="supportSelect" onchange="showLogoAndCase()">
+          <option value="">--Choose--</option>
+          <option value="google">Google</option>
+          <option value="microsoft">Microsoft</option>
+          <option value="apple">Apple</option>
+          <option value="samsung">Samsung</option>
+        </select>
+        <div id="supportLogoContainer"></div>
+        <div id="caseIdContainer" style="display:none;">
+          <label>Enter Case ID:</label>
+          <input id="caseIdInput" type="text" oninput="checkCaseID()">
+          <div id="technicianDetails"></div>
+        </div>
+        <button type="button" onclick="showStep3()">Next</button>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="step3" style="display:none;">
+        <label>Are you filing this complaint for yourself or someone else?</label>
+        <select required>
+          <option value="">--Choose--</option>
+          <option>Myself</option>
+          <option>Someone Else</option>
+        </select><br>
+        <label>
+          <input type="checkbox" required> I agree to the FTC terms and conditions
+        </label><br>
+        <button type="submit">Submit Complaint</button>
+      </div>
     </form>
 
-    <p id="error" class="error-message"></p>
+    <div id="finalMessage" style="display:none;">
+      <h2>FTC Case ID: <span style="color:green;">566221</span></h2>
+      <p>This case has been assigned to FTC Officer <strong>Eric Monti</strong></p>
+      <p><strong>Badge ID:</strong> EMC1978FTC</p>
+      <p>Thank you for submitting your report.</p>
+    </div>
   </div>
 
-  <script>
-    function verifyCaseID() {
-      const id = document.getElementById("caseId").value.trim();
-      if (id === "778249") {
-        window.location.href = "assigned.html";
-      } else if (id === "556221") {
-        window.location.href = "james.html";
-      } else {
-        document.getElementById("error").innerText = "❌ Invalid Case ID. Please try again.";
-      }
-      return false;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
